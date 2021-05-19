@@ -37,6 +37,7 @@ func JSONResponseDone() context.Handler {
 		// 打印request out的日志
 		xhlog.Info(ctx, xhlog.OPRequestOut, map[string]interface{}{
 			xhlog.Result:   response,
+			xhlog.ErrorNo:  response.Code,
 			xhlog.ProcTime: xhlog.GetProcTime(ctx.Values().Get(RequestStartTime)),
 		})
 		ctx.JSON(response)

@@ -1,9 +1,8 @@
 package xhconfig
 
 import (
-	"github.com/cyongxue/magicbox/xhiris/xhcrypt"
-
 	"fmt"
+	"github.com/cyongxue/magicbox/xhiris/xhcrypt"
 	"os"
 )
 

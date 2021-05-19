@@ -7,11 +7,12 @@ require (
 	github.com/andybalholm/brotli v1.0.1 // indirect
 	github.com/caixw/lib.go v0.0.0-20141220110639-1781da9139e0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
-	github.com/go-sql-driver/mysql v1.5.0 // indirect
-	github.com/go-xorm/builder v0.3.4 // indirect
-	github.com/go-xorm/xorm v0.7.9 // indirect
+	github.com/go-sql-driver/mysql v1.5.0
+	github.com/go-xorm/builder v0.3.4
+	github.com/go-xorm/xorm v0.7.9
 	github.com/golang-collections/lib.go v0.0.0-20141117141324-c7bc093f17da
 	github.com/golang/mock v1.4.4
+	github.com/gomodule/redigo v1.7.1-0.20190724094224-574c33c3df38
 	github.com/iris-contrib/jade v1.1.4 // indirect
 	github.com/iris-contrib/schema v0.0.6 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
