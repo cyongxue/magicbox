@@ -15,7 +15,7 @@ func TestInitLimitUtil(t *testing.T) {
 		Prefix:     "test",
 		Level:      "info",
 		RotateSize: 1 * 1024 * 1024,
-		Console:    true,
+		Console:    false,
 	}
 	if err := xhlog.Init(&logConf); err != nil {
 		fmt.Println("dh log init error: " + err.Error())
@@ -45,11 +45,11 @@ func TestInitLimitUtil(t *testing.T) {
 
 func BenchmarkInitLimitUtil(b *testing.B) {
 	logConf := xhlog.LoggerConf{
-		Dir:        "/Users/hehui/GolandProjects/src/github.com/cyongxue/magicbox/xhiris/xhredis/logs",
+		Dir:        "E:\\GoglandProjects\\src\\github.com\\cyongxue\\magicbox\\xhiris\\xhlog\\logs",
 		Prefix:     "test",
 		Level:      "info",
 		RotateSize: 1 * 1024 * 1024,
-		Console:    true,
+		Console:    false,
 	}
 	if err := xhlog.Init(&logConf); err != nil {
 		fmt.Println("dh log init error: " + err.Error())
@@ -74,6 +74,44 @@ func BenchmarkInitLimitUtil(b *testing.B) {
 			unLimit++
 		}
 	}
+
+	fmt.Println(fmt.Sprintf("limit=%d; unLimit=%d", limit, unLimit))
+	return
+}
+
+func BenchmarkInitLimitUtilParal(b *testing.B) {
+	logConf := xhlog.LoggerConf{
+		Dir:        "E:\\GoglandProjects\\src\\github.com\\cyongxue\\magicbox\\xhiris\\xhlog\\logs",
+		Prefix:     "test",
+		Level:      "info",
+		RotateSize: 1 * 1024 * 1024,
+		Console:    false,
+	}
+	if err := xhlog.Init(&logConf); err != nil {
+		fmt.Println("dh log init error: " + err.Error())
+		return
+	}
+
+	irisCtx := context.NewContext(nil)
+	irisCtx.Values().Set(xhid.TraceId, xhid.IdDriver(1))
+	irisCtx.Values().Set(xhid.SpanId, xhid.MakeSpanId("hello world"))
+
+	b.StopTimer()
+	b.StartTimer()
+
+	InitLimitUtil(10, 10, 10)
+
+	unLimit := 0
+	limit := 0
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			if LimitEngine.CheckKeyLimit(irisCtx, "1234567890") {
+				limit++
+			} else {
+				unLimit++
+			}
+		}
+	})
 
 	fmt.Println(fmt.Sprintf("limit=%d; unLimit=%d", limit, unLimit))
 	return
